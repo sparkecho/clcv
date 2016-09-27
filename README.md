@@ -2,7 +2,7 @@
 ## Common Lisp Computer Vision Library.
    This is an attempt of building a computer vision library for Common Lisp.
 
-   It was inspired by [OpenCV](opencv.org), but limited by my ability and effort
+   It was inspired by [OpenCV](www.opencv.org), but limited by my ability and effort
 
 it may takes a long time to finish even the basic part.
 
