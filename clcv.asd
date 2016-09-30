@@ -12,3 +12,28 @@
                (:file "package")
                (:file "clcv")))
 
+(asdf:defsystem #:core
+  :depends-on (:clcv)
+  :components
+  ((:module "core"
+            :components
+            ((:file "package")
+             (:file "core/*.lisp")))))
+
+(asdf:defsystem #:imgcodecs
+  :depends-on (:opticl :split-sequence)
+  :components
+  ((:module "imgcodecs"
+            :components
+            ((:file "package")
+             (:file "imgcodecs/imread.lisp")
+             (:file "imgcodecs/imwrite.lisp")))))
+
+
+(asdf:defsystem #:highgui
+  :depends-on (:mcclim)
+  :components
+  ((:module "highgui"
+            :components
+            ((:file "package")
+             (:file "highgui/imshow.lisp")))))
