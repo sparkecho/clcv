@@ -18,7 +18,7 @@
   ((:module "core"
             :components
             ((:file "package")
-             (:file "core/*.lisp")))))
+             (:file "core/swap.lisp")))))
 
 (asdf:defsystem #:imgcodecs
   :depends-on (:opticl :split-sequence)
