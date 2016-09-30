@@ -1,4 +1,5 @@
 # Files not to track
 *~
-#*#
+\#*\#
 *.fasl
+*temp*
