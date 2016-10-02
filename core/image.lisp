@@ -9,6 +9,7 @@
                        (eql float) (eql signed-byte)))
   (channels  3 :type (unsigned-byte 8)))
 
+
 (defclass image ()
   ((data :initarg data
          :accessor data
@@ -23,11 +24,17 @@
              :accessor channels
              :type '(unsigned-byte 8))
    (bit-depth :initarg bit-depth
-              :accessor bit-depth)
+              :accessor bit-depth
+              :type 'unsigned-byte)
    (color-type :initarg color-type
-               :accessor color-type)
-   (transparency :initarg transparency
-                 :accessor transparency)))
+               :accessor color-type
+               :type 'symbol)))
+
+
+(defclass png-image (image)
+  ((transparency :initarg transparency
+                 :accessor transparency
+                 :type (or (array * 2) (eql nil)))))
 
 ;(defclass png-image (image))
 
