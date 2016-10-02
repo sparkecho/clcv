@@ -76,6 +76,17 @@
 (defclass jpeg-image (image)
   ())
 
+(defclass tiff-image ()
+  ((bits-per-sample :accessor bits-per-sample :initarg :bits-per-sample)
+   (samples-per-pixel :accessor samples-per-pixel
+                      :initarg :samples-per-pixel
+                      :initform nil)
+   (byte-order :accessor byte-order :initarg :byte-order)
+   (color-map :accessor color-map :initarg :color-map :initform nil)
+   (min-is-white :accessor min-is-white :initarg :min-is-white
+                 :initform nil)))
+
+
 ;(defclass png-image (image))
 
 
