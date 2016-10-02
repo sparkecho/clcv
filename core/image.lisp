@@ -9,6 +9,44 @@
                        (eql float) (eql signed-byte)))
   (channels  3 :type (unsigned-byte 8)))
 
+;; Unsigned 8bits
+(defconstant +8uc1+ (make-image-type :bit-depth 8 :data-type 'unsigned-byte :channels 1))
+(defconstant +8uc2+ (make-image-type :bit-depth 8 :data-type 'unsigned-byte :channels 2))
+(defconstant +8uc3+ (make-image-type :bit-depth 8 :data-type 'unsigned-byte :channels 3))
+(defconstant +8uc4+ (make-image-type :bit-depth 8 :data-type 'unsigned-byte :channels 4))
+;; Signed 8bits
+(defconstant +8sc1+ (make-image-type :bit-depth 8 :data-type 'signed-byte :channels 1))
+(defconstant +8sc2+ (make-image-type :bit-depth 8 :data-type 'signed-byte :channels 2))
+(defconstant +8sc3+ (make-image-type :bit-depth 8 :data-type 'signed-byte :channels 3))
+(defconstant +8sc4+ (make-image-type :bit-depth 8 :data-type 'signed-byte :channels 4))
+;; Unsigned 16bits
+(defconstant +16uc1+ (make-image-type :bit-depth 16 :data-type 'unsigned-byte :channels 1))
+(defconstant +16uc2+ (make-image-type :bit-depth 16 :data-type 'unsigned-byte :channels 2))
+(defconstant +16uc3+ (make-image-type :bit-depth 16 :data-type 'unsigned-byte :channels 3))
+(defconstant +16uc4+ (make-image-type :bit-depth 16 :data-type 'unsigned-byte :channels 4))
+;; Signed 16bits
+(defconstant +16sc1+ (make-image-type :bit-depth 16 :data-type 'signed-byte :channels 1))
+(defconstant +16sc2+ (make-image-type :bit-depth 16 :data-type 'signed-byte :channels 2))
+(defconstant +16sc3+ (make-image-type :bit-depth 16 :data-type 'signed-byte :channels 3))
+(defconstant +16sc4+ (make-image-type :bit-depth 16 :data-type 'signed-byte :channels 4))
+;; Signed 32bits
+(defconstant +32sc1+ (make-image-type :bit-depth 32 :data-type 'signed-byte :channels 1))
+(defconstant +32sc2+ (make-image-type :bit-depth 32 :data-type 'signed-byte :channels 2))
+(defconstant +32sc3+ (make-image-type :bit-depth 32 :data-type 'signed-byte :channels 3))
+(defconstant +32sc4+ (make-image-type :bit-depth 32 :data-type 'signed-byte :channels 4))
+;; Float 32bits
+(defconstant +32fc1+ (make-image-type :bit-depth 32 :data-type 'float :channels 1))
+(defconstant +32fc2+ (make-image-type :bit-depth 32 :data-type 'float :channels 2))
+(defconstant +32fc3+ (make-image-type :bit-depth 32 :data-type 'float :channels 3))
+(defconstant +32fc4+ (make-image-type :bit-depth 32 :data-type 'float :channels 4))
+;; Double 64bits
+(defconstant +64fc1+ (make-image-type :bit-depth 64 :data-type 'double-float :channels 1))
+(defconstant +64fc2+ (make-image-type :bit-depth 64 :data-type 'double-float :channels 2))
+(defconstant +64fc3+ (make-image-type :bit-depth 64 :data-type 'double-float :channels 3))
+(defconstant +64fc4+ (make-image-type :bit-depth 64 :data-type 'double-float :channels 4))
+
+
+
 
 (defclass image ()
   ((data :initarg data
