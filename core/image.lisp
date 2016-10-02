@@ -60,19 +60,21 @@
            :type 'unsigned-byte)
    (channels :initarg channels
              :accessor channels
-             :type '(unsigned-byte 8))
-   (bit-depth :initarg bit-depth
+             :type '(unsigned-byte 8))))
+
+(defclass png-image (image)
+  ((bit-depth :initarg bit-depth
               :accessor bit-depth
               :type 'unsigned-byte)
    (color-type :initarg color-type
                :accessor color-type
-               :type 'symbol)))
-
-
-(defclass png-image (image)
-  ((transparency :initarg transparency
+               :type 'symbol)
+   (transparency :initarg transparency
                  :accessor transparency
                  :type (or (array * 2) (eql nil)))))
+
+(defclass jpeg-image (image)
+  ())
 
 ;(defclass png-image (image))
 
