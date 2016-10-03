@@ -83,7 +83,7 @@
 (defclass jpeg-image (image)
   ())
 
-(defclass tiff-image ()
+(defclass tiff-image (image)
   ((bits-per-sample :accessor bits-per-sample :initarg :bits-per-sample)
    (samples-per-pixel :accessor samples-per-pixel
                       :initarg :samples-per-pixel
