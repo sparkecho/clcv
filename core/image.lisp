@@ -65,10 +65,14 @@
              :initform 3
              :accessor channels
              :type '(unsigned-byte 8))
+   ;; color-models: RGB HSV GRAY YCbCr, etc.
    (color-model :initarg :color-model
                 :initform :rgb
                 :accessor color-model
                 :type 'symbol)))
+
+(defclass jpeg-image (image)
+  ())
 
 (defclass png-image (image)
   ((bit-depth :initarg :bit-depth
@@ -86,9 +90,6 @@
                  :accessor transparency
                  :type (or (array * 2) (eql nil)))))
 
-(defclass jpeg-image (image)
-  ())
-
 (defclass tiff-image (image)
   ((bits-per-sample :accessor bits-per-sample :initarg :bits-per-sample)
    (samples-per-pixel :accessor samples-per-pixel
@@ -98,3 +99,37 @@
    (color-map :accessor color-map :initarg :color-map :initform nil)
    (min-is-white :accessor min-is-white :initarg :min-is-white
                  :initform nil)))
+
+
+;; use the corresponding functions to make a specific type image object.
+(defun make-image (filetype)
+  (case filetype
+    ((:jpeg :jpg) (make-jpeg-image))
+    ((:tiff :tif) (make-tiff-image))
+    (:png (make-png-image))
+    (:pbm (make-pbm-image))
+    (:pgm (make-pgm-image))
+    (:ppm (make-ppm-image))
+    (:gif (make-gif-image))
+    (otherwise (error "Unsupported image type ~A~%" filetype))))
+
+(defun make-jpeg-image ()
+  (princ "jpeg"))                       ;for test
+
+(defun make-png-image ()
+  (princ "png"))                        ;for test
+
+(defun make-tiff-image ()
+  (princ "tiff"))                       ;for test
+
+(defun make-pbm-image ()
+  (princ "pbm"))                        ;for test
+
+(defun make-pgm-image ()
+  (princ "pgm"))                        ;for test
+
+(defun make-ppm-image ()
+  (princ "ppm"))                        ;for test
+
+(defun make-gif-image ()
+  (princ "gif"))                        ;for test
