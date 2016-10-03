@@ -62,15 +62,21 @@
            :accessor height
            :type 'unsigned-byte)
    (channels :initarg :channels
-             :initform 1
+             :initform 3
              :accessor channels
-             :type '(unsigned-byte 8))))
+             :type '(unsigned-byte 8))
+   (color-model :initarg :color-model
+                :initform :rgb
+                :accessor color-model
+                :type 'symbol)))
 
 (defclass png-image (image)
   ((bit-depth :initarg :bit-depth
               :initform 8
               :accessor bit-depth
               :type 'unsigned-byte)
+   ;; color-type: (member :greyscale :truecolor :indexed-colour
+   ;;                     :greyscale-alpha :truecolor-alpha)
    (color-type :initarg :color-type
                :initform :truecolor
                :accessor color-type
@@ -92,9 +98,3 @@
    (color-map :accessor color-map :initarg :color-map :initform nil)
    (min-is-white :accessor min-is-white :initarg :min-is-white
                  :initform nil)))
-
-
-;(defclass png-image (image))
-
-
-;(defmethod 
