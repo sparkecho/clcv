@@ -50,26 +50,33 @@
 
 (defclass image ()
   ((data :initarg :data
+         :initform nil
          :accessor data
          :type 'array)
    (width :initarg :width
+          :initform 0
           :accessor width
           :type 'unsigned-byte)
    (height :initarg :height
+           :initform 0
            :accessor height
            :type 'unsigned-byte)
    (channels :initarg :channels
+             :initform 1
              :accessor channels
              :type '(unsigned-byte 8))))
 
 (defclass png-image (image)
   ((bit-depth :initarg :bit-depth
+              :initform 8
               :accessor bit-depth
               :type 'unsigned-byte)
    (color-type :initarg :color-type
+               :initform :truecolor
                :accessor color-type
                :type 'symbol)
    (transparency :initarg :transparency
+                 :initform nil
                  :accessor transparency
                  :type (or (array * 2) (eql nil)))))
 
