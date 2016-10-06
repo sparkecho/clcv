@@ -1,13 +1,13 @@
 (in-package :clcv)
 
-(defun get-random-color ()
-  (let ((r (/ (random 256) 256.0))
-        (g (/ (random 256) 256.0))
-        (b (/ (random 256) 256.0)))
+(defun make-color (red green blue)
+  (let ((r (/ red 256.0))
+        (g (/ green 256.0))
+        (b (/ blue 256.0)))
     (xlib:make-color :red r :green g :blue b)))
 
-
-(defun imshow (width height &optional (host ""))
+;; image-data is a 3 dimentions array
+(defun imshow (width height image-data &optional (host ""))
   (let* ((display (xlib:open-display host))
          (screen (first (xlib:display-roots display)))
          (black (xlib:screen-black-pixel screen))
@@ -26,15 +26,18 @@
                               :discard-p t)
       (:exposure (count)
                  (when (zerop count)
-                   (loop for i from 0 to 400
-                      do (let* ((color (get-random-color))
-                                (gctex (xlib:create-gcontext
-                                        :drawable root-window
-                                        :foreground (xlib:alloc-color
-                                                     (xlib:window-colormap root-window)
-                                                     color)
-                                        :background black)))
-                           (xlib:draw-point my-window gctex i i))))
+                   (loop for i from 0 below width
+                      do (loop for j from 0 below height
+                            do (let* ((color (make-color (aref image-data j i 0)
+                                                         (aref image-data j i 1)
+                                                         (aref image-data j i 2)))
+                                      (gctex (xlib:create-gcontext
+                                              :drawable root-window
+                                              :foreground (xlib:alloc-color
+                                                           (xlib:window-colormap root-window)
+                                                           color)
+                                              :background black)))
+                                 (xlib:draw-point my-window gctex i j)))))
                  nil)
       (:button-press () t))
     (xlib:destroy-window my-window)
