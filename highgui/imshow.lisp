@@ -7,6 +7,9 @@
     (xlib:make-color :red r :green g :blue b)))
 
 ;; image-data is a 3 dimentions array
+;; example:
+;; (clcv:imshow 227 246 (opticl:read-png-file "~/Picture/cat.png"))
+;; (clcv:imshow 600 400 (opticl:read-jpeg-file "~/Picture/flower.jpg"))
 (defun imshow (width height image-data &optional (host ""))
   (let* ((display (xlib:open-display host))
          (screen (first (xlib:display-roots display)))
