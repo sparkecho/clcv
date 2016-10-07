@@ -10,7 +10,7 @@
 ;; example:
 ;; (clcv:imshow 227 246 (opticl:read-png-file "~/Picture/cat.png"))
 ;; (clcv:imshow 600 400 (opticl:read-jpeg-file "~/Picture/flower.jpg"))
-(defun imshow (width height image-data &optional (host ""))
+(defun imshow (winname width height image-data &optional (host ""))
   (let* ((display (xlib:open-display host))
          (screen (first (xlib:display-roots display)))
          (black (xlib:screen-black-pixel screen))
@@ -24,6 +24,12 @@
                      :background black
                      :event-mask (xlib:make-event-mask :exposure
                                                        :button-press))))
+    (xlib:change-property my-window
+                          :wm_name
+                          winname
+                          :string
+                          8
+                          :transform #'char-code)
     (xlib:map-window my-window)
     (xlib:event-case (display :force-output-p t
                               :discard-p t)
