@@ -102,34 +102,34 @@
 
 
 ;; use the corresponding functions to make a specific type image object.
-(defun make-image (filetype)
+(defun make-image (filetype width height type)
   (case filetype
-    ((:jpeg :jpg) (make-jpeg-image))
-    ((:tiff :tif) (make-tiff-image))
-    (:png (make-png-image))
-    (:pbm (make-pbm-image))
-    (:pgm (make-pgm-image))
-    (:ppm (make-ppm-image))
-    (:gif (make-gif-image))
+    ((:jpeg :jpg) (make-jpeg-image width height type))
+    ((:tiff :tif) (make-tiff-image width height type))
+    (:png (make-png-image width height type))
+    (:pbm (make-pbm-image width height type))
+    (:pgm (make-pgm-image width height type))
+    (:ppm (make-ppm-image width height type))
+    (:gif (make-gif-image width height type))
     (otherwise (error "Unsupported image type ~A~%" filetype))))
 
-(defun make-jpeg-image ()
+(defun make-jpeg-image (width height type)
   (princ "jpeg"))                       ;for test
 
-(defun make-png-image ()
+(defun make-png-image (width height type)
   (princ "png"))                        ;for test
 
-(defun make-tiff-image ()
+(defun make-tiff-image (width height type)
   (princ "tiff"))                       ;for test
 
-(defun make-pbm-image ()
+(defun make-pbm-image (width height type)
   (princ "pbm"))                        ;for test
 
-(defun make-pgm-image ()
+(defun make-pgm-image (width height type)
   (princ "pgm"))                        ;for test
 
-(defun make-ppm-image ()
+(defun make-ppm-image (width height type)
   (princ "ppm"))                        ;for test
 
-(defun make-gif-image ()
+(defun make-gif-image (width height type)
   (princ "gif"))                        ;for test
