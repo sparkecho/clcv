@@ -117,7 +117,10 @@
   (princ "jpeg"))                       ;for test
 
 (defun make-png-image (width height type)
-  (princ "png"))                        ;for test
+  (let ((bit-depth (array-type-bit-depth type))
+        (data-type (array-type-data-type type))
+        (channels  (array-type-channels  type)))
+    (make-array (list width height channels) :element-type `(,data-type ,bit-depth))))
 
 (defun make-tiff-image (width height type)
   (princ "tiff"))                       ;for test
