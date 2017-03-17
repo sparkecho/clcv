@@ -25,10 +25,8 @@
                      :event-mask (xlib:make-event-mask :exposure
                                                        :button-press))))
     (xlib:change-property my-window
-                          :wm_name
-                          winname
-                          :string
-                          8
+                          :wm_name winname
+                          :string  8
                           :transform #'char-code)
     (xlib:map-window my-window)
     (xlib:event-case (display :force-output-p t
