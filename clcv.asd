@@ -1,46 +1,36 @@
 ;;;; clcv.asd
 
-(asdf:defsystem #:clcv
+#-asdf3.1 (error "clcv requires ASDF 3.1")
+(asdf:defsystem "clcv"
   :name "clcv"
   :description "Common Lisp Computer Vision Library"
   :author "sparkecho <echozhz@126.com>"
   :license "GPL v3.0"
-  :serial t
-  :depends-on (clx opticl)
-  :components
-  ((:static-file "README.md")
-   (:static-file "LICENSE")
-   (:file "package")
-   (:file "clcv")
-   (:file "core/image")
-   (:file "core/swap")
-   (:file "imgcodecs/imread")
-   (:file "imgcodecs/imwrite")
-   (:file "highgui/imshow")))
-
-;; (asdf:defsystem #:core
-;;   :depends-on (:clcv)
-;;   :components
-;;   ((:module "core"
-;;             :components
-;;             ((:file "package")
-;;              (:file "core/image")
-;;              (:file "core/swap")))))
-
-;; (asdf:defsystem #:imgcodecs
-;;   :depends-on (:opticl :split-sequence)
-;;   :components
-;;   ((:module "imgcodecs"
-;;             :components
-;;             ((:file "package")
-;;              (:file "imgcodecs/imread")
-;;              (:file "imgcodecs/imwrite")))))
+  :class :package-inferred-system
+  :depends-on ("opticl"
+               "sdl2"
+               "clcv/core/all"
+               "clcv/dip/all"
+               "clcv/gui/all"
+               "clcv/io/all"
+               "clcv/ml/all"
+               "clcv/graphics/all")
+  :in-order-to ((test-op (load-op "clcv/test/all")))
+  :perform (test-op (o c) (symbol-call :clcv/test/all :test-suite))
+  :serial nil
+  :components ((:static-file "README.md")
+               (:static-file "LICENSE")
+               (:static-file "TODO.org")))
 
 
-;; (asdf:defsystem #:highgui
-;;   :depends-on (:mcclim)
-;;   :components
-;;   ((:module "highgui"
-;;             :components
-;;             ((:file "package")
-;;              (:file "highgui/imshow")))))
+;; ERROR with test
+(defsystem "clcv/test" :depends-on ("clcv/test/all"))
+
+
+(register-system-packages "clcv/core/all"   '(:clcv-core))
+(register-system-packages "clcv/dip/all"    '(:clcv-dip))
+(register-system-packages "clcv/gui/all"    '(:clcv-gui))
+(register-system-packages "clcv/io/all"     '(:clcv-io))
+(register-system-packages "clcv/ml/all"     '(:clcv-ml))
+(register-system-packages "clcv/graphic/all" '(:clcv-graphics))
+(register-system-packages "clcv/test/all"   '(:clcv-test))
