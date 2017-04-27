@@ -1,6 +1,7 @@
 (uiop/package:define-package :clcv/gui/imshow
-  (:use :common-lisp)
-  (:export #:imshow))
+    (:use :common-lisp)
+  ;; (:shadow #:format)
+  (:export #:imshow #:eformat))
 
 (in-package :clcv/gui/imshow)
 
@@ -40,10 +41,15 @@
              (when (sdl2:scancode= (sdl2:scancode-value keysym) :scancode-escape)
                (sdl2:push-event :quit)))
             (:idle
-             ())
+             ()
+             (sdl2:delay 300))
             (:quit () t)))))))
 
 
+(defmacro eformat (destination control-string &rest format-arguments)
+  `(if (and ,destination (listp ,destination))
+       (imshow ,destination (cl:format nil ,control-string ,@format-arguments))
+       (cl:format ,destination ,control-string ,@format-arguments)))
 
 
 
