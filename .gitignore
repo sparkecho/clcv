@@ -3,3 +3,8 @@
 \#*\#
 *.fasl
 *temp*
+*.aux
+*.log
+*.pdf
+doc/cn/auto/
+doc/en/auto/
