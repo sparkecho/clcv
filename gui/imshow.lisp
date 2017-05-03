@@ -11,7 +11,7 @@
   (sdl2:render-draw-point renderer x y))
 
 
-(defun imshow (image &optional (title ""))
+(defun imshow (image &key (title "") (delay-time 300))
   "Display the given image on the screen."
   (sdl2:with-init (:video)
     (opticl:with-image-bounds (height width) image
@@ -30,5 +30,5 @@
                (sdl2:push-event :quit)))
             (:idle
              ()
-             (sdl2:delay 300))
+             (sdl2:delay delay-time))
             (:quit () t)))))))
