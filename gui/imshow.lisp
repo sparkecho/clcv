@@ -6,6 +6,67 @@
 (in-package :clcv/gui/imshow)
 
 
+(declaim (inline put-pixel))
+(defun put-pixel (renderer x y &optional (r 255) (g 255) (b 255) (a 255))
+  (sdl2:set-render-draw-color renderer r g b a)
+  (sdl2:render-draw-point renderer x y))
+
+
+(defgeneric imshow (image &optional title)
+  (:documentation "Display given image on the screen."))
+
+
+;; (eval-when (:compile-toplevel :load-toplevel :execute)
+(defmethod imshow ((image array) &optional (title ""))
+  (flet ((imshow-array (image title)
+           (sdl2:with-init (:video)
+             (opticl:with-image-bounds (height width) image
+               (sdl2:with-window (window :title title :w width :h height :flags '(:shown))
+                 (sdl2:with-renderer (renderer window :flags '(:renderer-accelerated))          
+                   (dotimes (y height)
+                     (dotimes (x width)
+                       (multiple-value-bind (r g b a)
+                           (opticl:pixel image y x)
+                         (put-pixel renderer x y r (or g 0) (or b 0) (or a 255)))))
+                   (sdl2:render-present renderer)
+                   (sdl2:with-event-loop (:method :poll)
+                     (:keyup
+                      (:keysym keysym)
+                      (when (sdl2:scancode= (sdl2:scancode-value keysym) :scancode-escape)
+                        (sdl2:push-event :quit)))
+                     (:idle
+                      ()
+                      (sdl2:delay 300))
+                     (:quit () t))))))))
+    (imshow-array image title)))
+#|
+(defmethod imshow ((image array) &optional (title ""))
+  (imshow-array image title))
+
+
+(defun imshow-array (image title)
+  (sdl2:with-init (:video)
+    (opticl:with-image-bounds (height width) image
+      (sdl2:with-window (window :title title :w width :h height :flags '(:shown))
+        (sdl2:with-renderer (renderer window :flags '(:renderer-accelerated))          
+          (dotimes (y height)
+            (dotimes (x width)
+              (multiple-value-bind (r g b a)
+                  (opticl:pixel image y x)
+                (put-pixel renderer x y r (or g 0) (or b 0) (or a 255)))))
+          (sdl2:render-present renderer)
+          (sdl2:with-event-loop (:method :poll)
+            (:keyup
+             (:keysym keysym)
+             (when (sdl2:scancode= (sdl2:scancode-value keysym) :scancode-escape)
+               (sdl2:push-event :quit)))
+            (:idle
+             ()
+             (sdl2:delay 300))
+            (:quit () t)))))))
+|#
+
+
 (defun mats-width (mats)
   (if (null mats)
       (error "No matrices in mats, mats is empty.")
@@ -16,12 +77,30 @@
       (error "No matrices in mats, mats is empty.")
       (array-dimension (car mats) 0)))
 
+(defmethod imshow ((image list) &optional (title ""))
+  (let ((height (mats-height image))
+        (width (mats-width image))
+        (mat1 (first image))
+        (mat2 (second image))
+        (mat3 (third image)))
+    (sdl2:with-init (:video)
+      (sdl2:with-window (win :title title :w width :h height :flags '(:shown))
+        (sdl2:with-renderer (renderer win :flags '(:renderer-accelerated))
+          (dotimes (x width)
+            (dotimes (y height)
+              (put-pixel renderer x y (aref mat1 y x) (aref mat2 y x) (aref mat3 y x))))
+          (sdl2:render-present renderer)
+          (sdl2:with-event-loop (:method :poll)
+            (:keyup
+             (:keysym keysym)
+             (when (sdl2:scancode= (sdl2:scancode-value keysym) :scancode-escape)
+               (sdl2:push-event :quit)))
+            (:idle
+             ()
+             (sdl2:delay 300))
+            (:quit () t)))))))
 
-(defun put-pixel (renderer x y &optional (r 255) (g 255) (b 255) (a 255))
-  (sdl2:set-render-draw-color renderer r g b a)
-  (sdl2:render-draw-point renderer x y))
-
-
+#|
 (defun imshow (mats &optional (title ""))
   (let ((height (mats-height mats))
         (width (mats-width mats))
@@ -44,6 +123,7 @@
              ()
              (sdl2:delay 300))
             (:quit () t)))))))
+|#
 
 
 (defmacro eformat (destination control-string &rest format-arguments)
