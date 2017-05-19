@@ -1,7 +1,7 @@
 (uiop/package:define-package :clcv/io/all
     (:nicknames :clcv-io)
   (:use :common-lisp)
-  (:use-reexport :clcv/io/hello :clcv/io/image))
+  (:use-reexport :clcv/io/image))
 
 
 (provide "clcv-io")
