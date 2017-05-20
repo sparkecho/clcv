@@ -2,6 +2,7 @@
 *~
 \#*\#
 *.fasl
+.Rhistory
 *temp*
 *.aux
 *.log
