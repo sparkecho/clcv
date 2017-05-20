@@ -58,11 +58,7 @@
 
 
 (defun image-type (image)
-  (cdr (if (= (array-rank image) 2)
-           (rassoc (cons 1 (array-element-type image))
-                   *image-types*
-                   :test #'equal)
-           (rassoc (cons (array-dimension image 2)
-                         (array-element-type image))
-                   *image-types*
-                   :test #'equal))))
+  (if (= (array-rank image) 2)
+      (rassoc (cons 1 (array-element-type image)) *image-types* :test #'equal)
+      (rassoc (cons (array-dimension image 2)
+                    (array-element-type image)) *image-types* :test #'equal)))
