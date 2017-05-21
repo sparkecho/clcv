@@ -6,6 +6,7 @@
            #:rgba-image
            #:make-image
            #:image-type
+           #:define-image-type
            #:1uc1
            #:2uc1
            #:4uc1
@@ -74,7 +75,7 @@
   (:documentation "Generate an `height' * `width' image of type `type'"))
 
 
-(defmacro define-image-type (name &optional channels element-type)
+(defmacro define-image-type (name &optional channels (element-type t))
   "Defines a new image type. Under the covers, this results in
 evaluation of the appropriate deftype and make-my-image-type
 constructor functions. Returns the name of the created
