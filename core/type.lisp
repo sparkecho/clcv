@@ -1,7 +1,7 @@
 (uiop/package:define-package :clcv/core/type
   (:use :common-lisp)
-  (:export :int8 :int16 :int32
-           :uint8 :uint16 :uint32
+  (:export :int8   :int16  :int32
+           :uint8  :uint16 :uint32
            :single :double :char
            :logical))
 
