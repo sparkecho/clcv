@@ -83,7 +83,7 @@ type (i.e. name)."
   (let ((type (read-from-string (format nil "~A" name))))
       `(progn
          (deftype ,type ()
-           `(image ,(or ,channels '*) ,(or ,element-type '*)))
+           `(image ,(or ',element-type '*) ,(or ,channels '*)))
          (defmethod make-image (height width (type (eql ',type)))
            (make-array (if (or (null ,channels) (= ,channels 1))
                            `(,height ,width)
@@ -101,7 +101,7 @@ type (i.e. name)."
       (4uc4 4 (unsigned-byte 4))
 
       (8uc1 1 (unsigned-byte 8))
-      (8uc2 2 (unsbigned-byte 8))
+      (8uc2 2 (unsigned-byte 8))
       (8uc3 3 (unsigned-byte 8))
       (8uc4 4 (unsigned-byte 8))
 
