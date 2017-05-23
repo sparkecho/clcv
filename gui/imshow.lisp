@@ -26,7 +26,7 @@
   (render-draw-point renderer x y))
 
 
-(defun imshow (image &key (title "") (delay-time 300))
+(defun imshow (image &key (title "") (delay-time 300) (display-channel t))
   "Display the given image on the screen."
   (with-init (:video)
     (with-image-bounds (height width channels) image
@@ -35,11 +35,28 @@
           (cond
             ;; gray scale image
             ((null channels)
-             (dotimes (y height)
-               (dotimes (x width)
-                 (let ((grayscale (pixel image y x)))
-                   (put-pixel renderer x y
-                              grayscale grayscale grayscale 255)))))
+             (case display-channel
+               (:r (dotimes (y height)
+                     (dotimes (x width)
+                       (let ((grayscale (pixel image y x)))
+                         (put-pixel renderer x y grayscale 0 0 255)))))
+               (:g (dotimes (y height)
+                     (dotimes (x width)
+                       (let ((grayscale (pixel image y x)))
+                         (put-pixel renderer x y 0 grayscale 0 255)))))
+               (:b (dotimes (y height)
+                     (dotimes (x width)
+                       (let ((grayscale (pixel image y x)))
+                         (put-pixel renderer x y 0 0 grayscale 255)))))
+               (:a (dotimes (y height)
+                     (dotimes (x width)
+                       (let ((grayscale (pixel image y x)))
+                         (put-pixel renderer x y 0 0 0 grayscale)))))
+               (otherwise (dotimes (y height)
+                            (dotimes (x width)
+                              (let ((grayscale (pixel image y x)))
+                                (put-pixel renderer x y
+                                           grayscale grayscale grayscale 255)))))))
             ;; rgb image / rgba image
             (t (dotimes (y height)
                  (dotimes (x width)
