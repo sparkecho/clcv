@@ -25,7 +25,9 @@ TODO List
      #2A((g g g) (g g g))
      #2A((b b b) (b b b)))
 ** Dicision
-   Plan (3) is chosen.
+   Plan (2) is chosen.
+   In order to be compatible with opticl, and simplify the
+Data Structure of image.
 * Pixel Manipulation
 ** (1) bitwise and Manipulation
        (logand #b1010 #b1101) => #b1000
@@ -35,9 +37,6 @@ TODO List
        Argulist: (&REST INTEGERS)
 ** (3) bitwise xor Manipulation
        logxor
-* Data Structure
-** Matrix
-   2 dimension Array
-** Image
-   List of Matrix
-   Each matrix in the list stands for a channel of the image.
+
+* color convert
+Extend with multitype, 8uc3 and 8uc1 is only supported right now.
