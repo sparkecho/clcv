@@ -75,6 +75,15 @@
   (:documentation "Generate an `height' * `width' image of type `type'"))
 
 
+;;; `type' is a list contains two elements, the first is number of channels
+;;; and the second element is the element-type of array.
+(defmethod make-image (height width (type list))
+  (let ((channels (first type)))
+    (make-array (if (= channels 1)
+                    (list height width)
+                    (list height width channels))
+                :element-type (second type))))
+
 (defmacro define-image-type (name &optional channels (element-type t))
   "Defines a new image type. Under the covers, this results in
 evaluation of the appropriate deftype and make-my-image-type
