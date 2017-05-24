@@ -7,6 +7,11 @@
            #:make-image
            #:image-type
            #:define-image-type
+           #:image-height
+           #:image-width
+           #:image-rows
+           #:image-cols
+           #:image-channels
            #:1uc1
            #:2uc1
            #:4uc1
@@ -189,3 +194,23 @@ type (i.e. name)."
                         (otherwise
                          (error "Unsupported type ~A." element-type))))))
       (prog1 (read-from-string (format nil "~AC~A" prefix channels))))))
+
+
+(declaim (inline image-height image-width image-rows image-cols image-channels))
+(defun image-height (image)
+  (array-dimension image 0))
+
+(defun image-width (image)
+  (array-dimension image 1))
+
+(defun image-rows (image)
+  (array-dimension image 0))
+
+(defun image-cols (image)
+  (array-dimension image 1))
+
+(defun image-channels (image)
+  (case (array-rank image)
+    (2 1)
+    (3 (array-dimension image 2))
+    (otherwise (error "Invalid image as parameter."))))
