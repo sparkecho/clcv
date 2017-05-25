@@ -2,7 +2,8 @@
     (:nicknames :clcv-core)
   (:use :common-lisp)
   (:use-reexport :clcv/core/type
-                 :clcv/core/image))
+                 :clcv/core/image
+                 :clcv/core/point))
 
 
 (provide "clcv-core")
