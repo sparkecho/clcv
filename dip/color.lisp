@@ -47,30 +47,30 @@
       rgb-image)))
 
 
-(defmethod convert-color (image (flag (eql :rgb2ycrcb)))
+(defmethod convert-color (image (flag (eql :rgb2ycbcr)))
   (with-image-bounds (height width)
       image
-    (let ((ycrcb-image (make-image height width '8uc3))
+    (let ((ycbcr-image (make-image height width '8uc3))
           (delta 128))
-      (declare (type 8uc3 ycrcb-image)
+      (declare (type 8uc3 ycbcr-image)
                (type 8uc3 image))
-      (flet ((to-ycrcb (r g b delta)
+      (flet ((to-ycbcr (r g b delta)
                (let ((y (round (+ (* r 0.299)
                                   (* g 0.587)
                                   (* b 0.114)))))
                  (values y
-                         (round (+ (* (- r y) 0.713) delta))
-                         (round (+ (* (- b y) 0.564) delta))))))
+                         (round (+ (* (- b y) 0.564) delta))
+                         (round (+ (* (- r y) 0.713) delta))))))
         (do-pixels (i j)
             image
           (multiple-value-bind (r g b)
               (pixel image i j)
-            (setf (pixel ycrcb-image i j)
-                  (to-ycrcb r g b delta)))))
-      ycrcb-image)))
+            (setf (pixel ycbcr-image i j)
+                  (to-ycbcr r g b delta)))))
+      ycbcr-image)))
 
 
-(defmethod convert-color (image (flag (eql :ycrcb2rgb)))
+(defmethod convert-color (image (flag (eql :ycbcr2rgb)))
   (with-image-bounds (height width)
       image
     (let ((rgb-image (make-image height width '8uc3))
@@ -81,9 +81,9 @@
                  (if (> val 255)
                      255
                      val))
-               (to-rgb (y cr cb delta)
-                 (let ((cr-delta (- cr delta))
-                       (cb-delta (- cb delta)))
+               (to-rgb (y cb cr delta)
+                 (let ((cb-delta (- cb delta))
+                       (cr-delta (- cr delta)))
                    (let ((r (round (+ y (* 1.403 cr-delta))))
                          (g (round (- y (* 0.714 cr-delta) (* 0.344 cb-delta))))
                          (b (round (+ y (* 1.773 cb-delta)))))
@@ -92,8 +92,8 @@
                              (normalize b))))))
         (do-pixels (i j)
             image
-          (multiple-value-bind (y cr cb)
+          (multiple-value-bind (y cb cr)
               (pixel image i j)
             (setf (pixel rgb-image i j)
-                  (to-rgb y cr cb delta)))))
+                  (to-rgb y cb cr delta)))))
       rgb-image)))
