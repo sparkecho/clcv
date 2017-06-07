@@ -2,6 +2,7 @@
     (:nicknames :clcv-dip)
   (:use :common-lisp)
   (:use-reexport :clcv/dip/arrayops
+                 :clcv/dip/imageops
                  :clcv/dip/geometry
                  :clcv/dip/color))
 
