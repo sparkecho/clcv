@@ -9,6 +9,7 @@
   :class :package-inferred-system
   :depends-on ("opticl"
                "sdl2"
+               "bordeaux-threads"
                "clcv/core/all"
                "clcv/matrix/all"
                "clcv/dip/all"
