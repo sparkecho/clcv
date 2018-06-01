@@ -3,6 +3,7 @@
   (:use :common-lisp)
   (:use-reexport :clcv/core/type
                  :clcv/core/image
+                 :clcv/core/array
                  :clcv/core/point))
 
 
