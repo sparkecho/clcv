@@ -27,14 +27,16 @@
       (otherwise (error "Unsupported type specifier ~A." type-specifier)))))
 
 (defun marray (rows cols &optional (channels 1) (type-specifier :8u) value)
-  (let ((element-type (decode-type-specifier type-specifier))
-        (dimensions (if (= channels 1)
+  (%marray rows cols channels (decode-type-specifier type-specifier) value))
+
+(defun %marray (rows cols channels element-type value)
+  (let ((dimensions (if (= channels 1)
                         (list rows cols)
                         (list rows cols channels))))
     (typecase value
       (null (make-array dimensions :element-type element-type))
       (number
-       (assert (typep value element-type) nil "Initial value ~A is not of given type :~A." value type-specifier)
+       (assert (typep value element-type) nil "Initial value ~A is not of given type :~A." value element-type)
        (make-array dimensions
                    :element-type element-type
                    :initial-element value))
@@ -97,4 +99,3 @@
                             do (setf (aref dst i j k)
                                      (logand (aref src i j k) (aref mask i j)))))))
             (t (error "Array has a rank > 3 is not supported right now.")))))
-          
