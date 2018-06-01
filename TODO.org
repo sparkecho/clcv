@@ -41,3 +41,17 @@ Data Structure of image.
    Use *sb-c::with-array-data* to optimize array operation
 * color convert
 Extend with multitype, 8uc3 and 8uc1 is only supported right now.
+* Integrate kbd event and mouse event
+something like:
+Event event = waitEvent(30);
+if (event == 'a') {
+    do something;
+} else if (event == ESC_pressed) {
+    do something;
+} else if (event == MOUSELBUTTON_RELEASED) {
+    do something;
+} else {
+    do something;
+}
+
+Maybe make use of GLFW.
