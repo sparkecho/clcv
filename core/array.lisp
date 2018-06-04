@@ -26,6 +26,20 @@
                  'float))
       (otherwise (error "Unsupported type specifier ~A." type-specifier)))))
 
+(defun array-type (arr)
+  (let ((etype (array-element-type arr)))
+    (if (listp etype)
+        (intern (format nil "~A~A"
+                        (second etype)
+                        (ecase (first etype)
+                          (unsigned-byte #\U)
+                          (signed-byte #\S)))
+                "KEYWORD")
+        (ecase etype
+          (float :f)
+          (single-float :sf)
+          (double-float :df)))))
+
 (defun marray (rows cols &optional (channels 1) (type-specifier :8u) value)
   (%marray rows cols channels (decode-type-specifier type-specifier) value))
 
@@ -99,3 +113,48 @@
                             do (setf (aref dst i j k)
                                      (logand (aref src i j k) (aref mask i j)))))))
             (t (error "Array has a rank > 3 is not supported right now.")))))
+
+(defun channels (arr)
+  (if (< (array-rank arr) 3)
+      1
+      (array-dimension arr 2)))
+
+(defun cross (arr))
+(defun dot (arr))
+(defun diag (arr))
+
+(defun for-each (arr fn)
+  (let ((vec (array-storage-vector arr)))))
+
+(defun resize (arr))
+(defun row (arr))
+(defun col (arr))
+
+
+
+
+(defclass array2d ()
+  ((rows :initarg :rows :reader rows :type unsigned-byte)
+   (cols :initarg :cols :reader cols :type unsigned-byte)
+   (channels :initform 1 :reader channels)
+   (data :initarg :data :accessor data :type (simple-array * *))))
+
+(defclass array3d ()
+  ((rows :initarg :rows :reader rows :type unsigned-byte)
+   (cols :initarg :cols :reader cols :type unsigned-byte)
+   (channels :initarg :channels :reader channels :type unsigned-byte)
+   (data :initarg :data :accessor data :type (simple-array * *))))
+
+(defgeneric ref (array i &optional j k))
+
+(defmethod ref ((array array2d) i &optional j k)
+  (declare (type unsigned-byte i))
+  (cond ((null j) (aref (data array) i))
+        ((null k) (aref (data array) (+ (* i (cols array)) j)))
+        (t (error "You are accessing a two dimensional array, but 3 indices provided."))))
+
+(defmethod ref ((array array3d) i &optional j k)
+  (declare (type unsigned-byte i))
+  (cond ((null j) (aref (data array) i))
+        ((null k) (aref (data array) (+ (* i (cols array) (channels array)) j)))
+        (t (aref (data array) (+ (* i (cols array) (channels array)) (* j (channels array)) k)))))
